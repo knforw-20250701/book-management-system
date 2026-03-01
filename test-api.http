@@ -1,0 +1,55 @@
+### 1. 著者を登録する
+# 正常な登録
+POST http://localhost:8081/api/authors
+Content-Type: application/json
+
+{
+  "name": "夏目漱石",
+  "birthDate": "1867-02-09"
+}
+
+### 2. 本を登録する (著者IDが1である前提)
+# 「出版前」ステータスで登録
+POST http://localhost:8081/api/books
+Content-Type: application/json
+
+{
+  "title": "吾輩は猫である",
+  "price": 1500,
+  "status": "PRE_PUBLISHED",
+  "authors": [
+    {
+      "id": 1,
+      "name": "夏目漱石",
+      "birthDate": "1867-02-09"
+    }
+  ]
+}
+
+### 3. 本の一覧を取得する
+GET http://localhost:8081/api/books
+Accept: application/json
+
+### 4. バリデーションエラーの確認 (未来の生年月日)
+# 400 Bad Request が返ることを確認
+POST http://localhost:8081/api/authors
+Content-Type: application/json
+
+{
+  "name": "未来の作家",
+  "birthDate": "2099-12-31"
+}
+
+### 5. バリデーションエラーの確認 (不正な価格)
+# 400 Bad Request が返ることを確認
+POST http://localhost:8081/api/books
+Content-Type: application/json
+
+{
+  "title": "無料の本",
+  "price": -1,
+  "status": "PRE_PUBLISHED",
+  "authors": [
+    { "id": 1 }
+  ]
+}

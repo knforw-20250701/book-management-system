@@ -1,0 +1,13 @@
+server:
+    port: 8081
+
+spring:
+    application:
+        name: book-management-system
+    datasource:
+        url: jdbc:postgresql://localhost:5432/mydatabase
+        username: myuser
+        password: secret
+        driver-class-name: org.postgresql.Driver
+    jooq:
+        render-schema: false
